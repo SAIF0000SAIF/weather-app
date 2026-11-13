@@ -9,6 +9,8 @@
 
     <style>
 
+        /* Reset */
+
         * {
             margin: 0;
             padding: 0;
@@ -16,8 +18,11 @@
             font-family: "Segoe UI", sans-serif;
         }
 
+        /* Body */
+
         body {
             min-height: 100vh;
+            width: 100vw;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -25,41 +30,47 @@
             background: linear-gradient(135deg, #101b35, #1b3152, #0c172b);
         }
 
+        /* Main Card */
+
         .weather-card {
-            width: 100%;
-            max-width: 420px;
+            width: 420px;
+            max-width: 100%;
             padding: 35px;
             border-radius: 25px;
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(15px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.3);
             text-align: center;
             color: white;
         }
 
+        /* Heading */
+
         .weather-card h1 {
-            font-size: 2rem;
+            font-size: 32px;
             margin-bottom: 25px;
             font-weight: 700;
         }
 
-        /* Search */
+        /* Search Box */
 
         .search-box {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            width: 100%;
         }
 
         .inp {
-            width: 75%;
+            width: 100%;
+            min-width: 0;
             height: 55px;
             border: 1px solid rgba(255, 255, 255, 0.15);
             outline: none;
             border-radius: 12px;
-            padding: 0 15px;
-            font-size: 1rem;
+            padding: 0px 15px;
+            font-size: 16px;
             background: rgba(255, 255, 255, 0.1);
             color: white;
         }
@@ -72,14 +83,17 @@
             border-color: #38bdf8;
         }
 
+        /* Search Button */
+
         .search-btn {
-            width: 25%;
+            width: 100px;
             height: 55px;
+            flex-shrink: 0;
             border: none;
             border-radius: 12px;
             background: #38bdf8;
             color: #101b35;
-            font-size: 0.95rem;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
@@ -101,14 +115,14 @@
         }
 
         #weather1_box h2 {
-            margin: 12px 0;
-            font-size: 1.1rem;
+            margin: 12px 0px;
+            font-size: 18px;
             font-weight: 500;
             color: #e3efff;
         }
 
         .loading {
-            font-size: 1rem;
+            font-size: 16px;
             color: #38bdf8;
         }
 
@@ -120,44 +134,100 @@
 
         @media (max-width: 768px) {
 
-            .weather-card {
-                max-width: 500px;
+            body {
                 padding: 25px;
             }
 
+            .weather-card {
+                width: 550px;
+                padding: 30px;
+            }
+
             .weather-card h1 {
-                font-size: 1.8rem;
+                font-size: 29px;
+            }
+
+            .inp {
+                height: 52px;
+                font-size: 15px;
+            }
+
+            .search-btn {
+                height: 52px;
+                width: 100px;
+            }
+
+            #weather1_box h2 {
+                font-size: 17px;
             }
 
         }
 
         /* Mobile */
 
-        @media (max-width: 576px) {
+        @media (max-width: 480px) {
 
             body {
                 padding: 15px;
             }
 
             .weather-card {
-                max-width: 100%;
-                padding: 20px;
+                width: 100%;
+                padding: 22px;
                 border-radius: 20px;
             }
 
             .weather-card h1 {
-                font-size: 1.6rem;
+                font-size: 25px;
+                margin-bottom: 22px;
             }
 
-            .inp,
+            .search-box {
+                gap: 7px;
+            }
+
+            .inp {
+                height: 48px;
+                padding: 0px 10px;
+                font-size: 14px;
+            }
+
             .search-btn {
-                height: 50px;
-                font-size: 0.9rem;
+                width: 85px;
+                height: 48px;
+                font-size: 13px;
+            }
+
+            #weather1_box {
+                margin-top: 12px;
             }
 
             #weather1_box h2 {
-                font-size: 0.95rem;
-                margin: 10px 0;
+                font-size: 15px;
+                margin: 12px 0px;
+            }
+
+        }
+
+        /* Small Mobile */
+
+        @media (max-width: 350px) {
+
+            .weather-card {
+                padding: 16px;
+            }
+
+            .weather-card h1 {
+                font-size: 22px;
+            }
+
+            .search-btn {
+                width: 72px;
+                font-size: 12px;
+            }
+
+            .inp {
+                font-size: 13px;
             }
 
         }
@@ -208,10 +278,13 @@
             const city = inp_box.value.trim();
 
             if (!city) {
+
                 weather1.innerHTML = `
                     <h2 class="error">Please enter a city name</h2>
                 `;
+
                 return;
+
             }
 
             searchBtn.disabled = true;
@@ -241,27 +314,15 @@
 
                 weather1.innerHTML = `
 
-                    <h2>
-                        📍 ${data.name}
-                    </h2>
+                    <h2>📍 ${data.name}</h2>
 
-                    <h2>
-                        🌡 ${data.main.temp}°C
-                    </h2>
+                    <h2>🌡 ${data.main.temp}°C</h2>
 
-                    <h2>
-                        ☁ ${data.weather[0].main}
-                    </h2>
+                    <h2>☁ ${data.weather[0].main}</h2>
 
-                    <h2>
-                        💧 Humidity:
-                        ${data.main.humidity}%
-                    </h2>
+                    <h2>💧 Humidity: ${data.main.humidity}%</h2>
 
-                    <h2>
-                        🌬 Wind:
-                        ${data.wind.speed} m/s
-                    </h2>
+                    <h2>🌬 Wind: ${data.wind.speed} m/s</h2>
 
                 `;
 
@@ -270,9 +331,7 @@
             catch (error) {
 
                 weather1.innerHTML = `
-                    <h2 class="error">
-                        ${error.message}
-                    </h2>
+                    <h2 class="error">${error.message}</h2>
                 `;
 
             }
@@ -286,7 +345,7 @@
         }
 
 
-        // Search Button Click
+        // Button Click
 
         searchBtn.addEventListener("click", getWeather);
 
